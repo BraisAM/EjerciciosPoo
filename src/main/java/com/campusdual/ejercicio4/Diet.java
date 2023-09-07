@@ -25,22 +25,10 @@ La clase dieta tiene que tener las siguientes funcionalidades:
 	-getTotalProteins(): devuelve el total de proteinas
 */
 public class Diet {
-    /*
-    public static class FoodWithWeight {
-        private Food food;
-        private Integer weight;
-
-        public FoodWithWeight(Food food, Integer weight) {
-            this.food = food;
-            this.weight = weight;
-        }
-    }
-    */
-    //List<FoodWithWeight> listFood = new ArrayList<>();
     Integer maxCalories;
     Integer maxFats;
     Integer maxCarbs;
-    Integer maxProtein;
+    Integer maxProteins;
     Boolean women;
     Integer age;
     Integer height;
@@ -51,15 +39,16 @@ public class Diet {
     public Diet() {
         listFood = new ArrayList<>();
     }
+
     public Diet(Integer maxCalories) {
         this.maxCalories = maxCalories;
         listFood = new ArrayList<>();
     }
 
-    public Diet(Integer maxFats, Integer maxCarbs, Integer maxProtein) {
+    public Diet(Integer maxFats, Integer maxCarbs, Integer maxProteins) {
         this.maxFats = maxFats;
         this.maxCarbs = maxCarbs;
-        this.maxProtein = maxProtein;
+        this.maxProteins = maxProteins;
         listFood = new ArrayList<>();
     }
 
@@ -68,17 +57,18 @@ public class Diet {
         this.age = age;
         this.height = height;
         this.weight = weight;
-        double maxCalories;
-        //Fórmula Hombres: TMB = 10P + 6,25A – 5E + 5
-        //Fórmula Mujeres: TMB = 10P + 6,25A – 5E – 161
-        if (!women) {
+        listFood = new ArrayList<>();
+        System.out.println(age +" "+ height +" "+ weight);
+    }
+    /*
+    if (!women) {
             maxCalories = (10 * weight) + (6.25 * height) - (5 * age) + 5;
         }
         else if (women){
             maxCalories = (10 * weight) + (6.25 * height) - (5 * age) - 161;
         }
         listFood = new ArrayList<>();
-    }
+     */
 
     public List<FoodWithWeight> getListFood() {
         return listFood;
@@ -88,35 +78,71 @@ public class Diet {
         this.listFood = listFood;
     }
 
-    public void addFood(Food food, Integer grams){
-        if (maxCalories != null && maxCalories < (getTotalCalories() + food.getCalories(grams))){
+    public void addFood(Food food, Integer grams) {
+        if (maxCalories != null && maxCalories < (getTotalCalories() + food.getCalories(grams))) {
             System.out.println("Ha superado el límite de calorias establecido.");
-            return ;
+            return;
         }
-        FoodWithWeight newFood = new FoodWithWeight(food, grams);
-        listFood.add(newFood);
+        if (maxCarbs != null && maxFats != null && maxProteins != null) {
+            if (maxCarbs < (getTotalCarbs() + food.getCarbs()) || maxFats < (getTotalFats() + food.getFats()) || maxProteins < (getTotalProteins() + food.getProteins())) {
+                System.out.println("Ha superado el límite de macronutrientes establecido.");
+                return;
+            }
+        } else {
+            FoodWithWeight newAddFood = new FoodWithWeight(food, grams);
+            listFood.add(newAddFood);
+        }
     }
+
     public Integer getTotalCalories() {
-        Integer result = 0;
-        for (FoodWithWeight actualFood:
-             listFood) {
+        Integer resultCalories = 0;
+        for (FoodWithWeight actualFood :
+                listFood) {
             Food food = actualFood.getFood();
             Integer grams = actualFood.getGrams();
             Integer calories = food.getCalories(grams);
-            result = result + calories;
+            resultCalories = resultCalories + calories;
         }
-        return result;
+        return resultCalories;
     }
+
     public Integer getTotalCarbs() {
-        return 1;
+        Integer resultCarbs = 0;
+        for (FoodWithWeight actualFood :
+                listFood) {
+            Food food = actualFood.getFood();
+            Integer grams = actualFood.getGrams();
+            Integer carbs = food.getCarbs();
+            resultCarbs = resultCarbs + carbs;
+        }
+        return resultCarbs;
     }
+
     public Integer getTotalFats() {
-        return 2;
+        Integer resultFats = 0;
+        for (FoodWithWeight actualFood :
+                listFood) {
+            Food food = actualFood.getFood();
+            Integer grams = actualFood.getGrams();
+            Integer fats = food.getFats();
+            resultFats = resultFats + fats;
+        }
+        return resultFats;
     }
+
     public Integer getTotalProteins() {
-        return 3;
+        Integer resultProteins = 0;
+        for (FoodWithWeight actualFood :
+                listFood) {
+            Food food = actualFood.getFood();
+            Integer grams = actualFood.getGrams();
+            Integer proteins = food.getProteins();
+            resultProteins = resultProteins + proteins;
+        }
+        return resultProteins;
     }
-    public class FoodWithWeight{
+
+    public class FoodWithWeight {
         private Food food;
         private Integer grams;
 
