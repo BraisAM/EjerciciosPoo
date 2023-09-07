@@ -26,6 +26,7 @@ La clase dieta tiene que tener las siguientes funcionalidades:
 */
 public class Diet {
     Integer maxCalories;
+    Double maxBasalCalories;
     Integer maxFats;
     Integer maxCarbs;
     Integer maxProteins;
@@ -57,19 +58,18 @@ public class Diet {
         this.age = age;
         this.height = height;
         this.weight = weight;
-        listFood = new ArrayList<>();
-        System.out.println(age +" "+ height +" "+ weight);
-    }
-    /*
-    if (!women) {
-            maxCalories = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+        if (!women) {
+            maxBasalCalories = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            System.out.println("Tus calorias máximas son: " + maxBasalCalories);
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
         else if (women){
-            maxCalories = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+            maxBasalCalories = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+            System.out.println("Tus calorias máximas son: " + maxBasalCalories);
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
         listFood = new ArrayList<>();
-     */
-
+    }
     public List<FoodWithWeight> getListFood() {
         return listFood;
     }

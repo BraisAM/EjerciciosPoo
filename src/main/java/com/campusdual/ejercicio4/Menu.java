@@ -28,7 +28,7 @@ public class Menu {
         Diet dieta = null;
         //List<Food> listFood = new ArrayList<>();
         do {
-            System.out.println("Menú\n"+"1.Crear/reiniciar dieta\n"+"2.Mostrar información\n"+"3.Agregar alimento\n"+"4.Salir\n");
+            System.out.println("~~~~~~~~ Menú ~~~~~~~~\n"+"1.Crear/reiniciar dieta\n"+"2.Mostrar información\n"+"3.Agregar alimento\n"+"4.Salir\n ~~~~~~~~~~~~~~~~~~~~~");
             select = entry.nextInt();
             switch (select) {
                 case 1:
@@ -70,12 +70,17 @@ public class Menu {
 
         switch (select) {
             case "a":
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 System.out.println("Ha elegido 'Sin limite'.");
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 newDiet = new Diet();
                 break;
             case "b":
                 System.out.println("Ha elegido 'Por calorias'.\n Ingrese el número máximo de calorias:");
                 Integer calories = entry.nextInt();
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                System.out.println("Has creado una dieta con un máximo de:\n - " + calories + " calorias.");
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 newDiet = new Diet(calories);
                 break;
             case "c":
@@ -85,6 +90,9 @@ public class Menu {
                 Integer fats = entry.nextInt();
                 System.out.println("Ingrese el número máximo de proteinas:\n");
                 Integer proteins = entry.nextInt();
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                System.out.println("Has creado una dieta con un máximo de:\n - " + carbs + " gr de carbohidratos.\n - " + fats + " gr de grasas.\n - " + proteins + " gr de proteinas.");
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 newDiet = new Diet(carbs, fats, proteins);
                 break;
             case "d":
@@ -99,6 +107,9 @@ public class Menu {
                     Integer height = entry.nextInt();
                     System.out.println("Ingrese su peso:\n");
                     Integer weight = entry.nextInt();
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                    System.out.println("Has creado una dieta para un hombre de " + age + " años, " + height + "cm de altura, y " + weight + "kg de peso.");
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                     newDiet = new Diet(false, age, height, weight);
                 }
                 else if (gender.equals("M")){
