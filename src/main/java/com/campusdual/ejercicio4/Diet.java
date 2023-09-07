@@ -1,8 +1,8 @@
 package com.campusdual.ejercicio4;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 Escribe una clase dieta, que teniendo en cuenta una serie de alimentos, vaya sumando cantidades en gramos y calcule cuantas calorías, carbohidratos, proteinas y grasas genera la ingesta
@@ -22,11 +22,21 @@ La clase dieta tiene que tener las siguientes funcionalidades:
 	-getTotalCalories(): devuelve el total de calorías
 	-getTotalCarbs(): devuelve el total de carbohidratos
 	-getTotalFats(): devuelve el total de grasas
-	-getTotalProtein(): devuelve el total de proteinas
+	-getTotalProteins(): devuelve el total de proteinas
 */
 public class Diet {
-    String food;
-    Map<Food, Integer> foodList = new HashMap<Food, Integer>();
+    /*
+    public static class FoodWithWeight {
+        private Food food;
+        private Integer weight;
+
+        public FoodWithWeight(Food food, Integer weight) {
+            this.food = food;
+            this.weight = weight;
+        }
+    }
+    */
+    //List<FoodWithWeight> listFood = new ArrayList<>();
     Integer maxCalories;
     Integer maxFats;
     Integer maxCarbs;
@@ -35,18 +45,22 @@ public class Diet {
     Integer age;
     Integer height;
     Integer weight;
+    List<FoodWithWeight> listFood;
+
 
     public Diet() {
-
+        listFood = new ArrayList<>();
     }
     public Diet(Integer maxCalories) {
         this.maxCalories = maxCalories;
+        listFood = new ArrayList<>();
     }
 
     public Diet(Integer maxFats, Integer maxCarbs, Integer maxProtein) {
         this.maxFats = maxFats;
         this.maxCarbs = maxCarbs;
         this.maxProtein = maxProtein;
+        listFood = new ArrayList<>();
     }
 
     public Diet(Boolean women, Integer age, Integer height, Integer weight) {
@@ -54,21 +68,77 @@ public class Diet {
         this.age = age;
         this.height = height;
         this.weight = weight;
+        double maxCalories;
+        //Fórmula Hombres: TMB = 10P + 6,25A – 5E + 5
+        //Fórmula Mujeres: TMB = 10P + 6,25A – 5E – 161
+        if (!women) {
+            maxCalories = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+        }
+        else if (women){
+            maxCalories = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+        }
+        listFood = new ArrayList<>();
+    }
+
+    public List<FoodWithWeight> getListFood() {
+        return listFood;
+    }
+
+    public void setListFood(List<FoodWithWeight> listFood) {
+        this.listFood = listFood;
     }
 
     public void addFood(Food food, Integer grams){
-        this.foodList.put(food,grams);
+        if (maxCalories != null && maxCalories < (getTotalCalories() + food.getCalories(grams))){
+            System.out.println("Ha superado el límite de calorias establecido.");
+            return ;
+        }
+        FoodWithWeight newFood = new FoodWithWeight(food, grams);
+        listFood.add(newFood);
     }
     public Integer getTotalCalories() {
-        this.foodList.put(new Food(10,4,5,"Manzana"),150);
-        this.foodList.put(new Food(8,6,10,"Tofu"),200);
-        this.foodList.put(new Food(7,4,4,"Pera"),150);
-        System.out.println(this.foodList.keySet());
-        for (int i = 0; i < this.foodList.size(); i++) {
-
+        Integer result = 0;
+        for (FoodWithWeight actualFood:
+             listFood) {
+            Food food = actualFood.getFood();
+            Integer grams = actualFood.getGrams();
+            Integer calories = food.getCalories(grams);
+            result = result + calories;
         }
+        return result;
+    }
+    public Integer getTotalCarbs() {
         return 1;
     }
+    public Integer getTotalFats() {
+        return 2;
+    }
+    public Integer getTotalProteins() {
+        return 3;
+    }
+    public class FoodWithWeight{
+        private Food food;
+        private Integer grams;
 
+        public FoodWithWeight(Food food, Integer grams) {
+            this.food = food;
+            this.grams = grams;
+        }
 
+        public Food getFood() {
+            return food;
+        }
+
+        public void setFood(Food food) {
+            this.food = food;
+        }
+
+        public Integer getGrams() {
+            return grams;
+        }
+
+        public void setGrams(Integer grams) {
+            this.grams = grams;
+        }
+    }
 }

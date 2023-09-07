@@ -49,4 +49,11 @@ public class Food {
     public void setProteins(Integer proteins) {
         this.proteins = proteins;
     }
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
+    }
 }
