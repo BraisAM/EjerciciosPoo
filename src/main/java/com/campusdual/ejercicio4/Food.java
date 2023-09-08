@@ -1,10 +1,10 @@
 package com.campusdual.ejercicio4;
 
 public class Food {
-    private Integer carbs;
-    private Integer fats;
-    private Integer proteins;
-    private String foodName;
+    protected Integer carbs;
+    protected Integer fats;
+    protected Integer proteins;
+    protected String foodName;
 
     public Food(){
         this.carbs=0;
@@ -19,7 +19,6 @@ public class Food {
         this.proteins=proteins;
         this.foodName=foodName;
     }
-
     public Integer getCalories(Integer weight){
         //1 gramo de proteína nos da 4 calorías.
         // 1 gramo de carbohidratos nos da 4 calorías.

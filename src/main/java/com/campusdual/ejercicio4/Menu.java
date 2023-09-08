@@ -39,14 +39,14 @@ public class Menu {
                         showData(fullDiet);
                     } else {
                         System.out.println("Primero debe crear una dieta.");
-                        fullDiet = newDiet();
+//                        fullDiet = newDiet();
                     }
                     break;
                 case 3:
                     if (fullDiet == null) {
-                        System.out.println("Debes crear una dieta primero.");
-                        fullDiet = newDiet();
-                        addFood(fullDiet, listFood);
+                        System.out.println("Primero debe crear una dieta.");
+//                        fullDiet = newDiet();
+//                        addFood(fullDiet, listFood);
                     }
                     else {
                         addFood(fullDiet, listFood);
@@ -136,7 +136,7 @@ public class Menu {
         System.out.println("2. Mostrar información: muestra calorías y macronutrientes de la dieta");
         System.out.println("Numero total de carbos: " + fullDiet.getTotalCarbs());
         System.out.println("Numero total de grasas: " + fullDiet.getTotalFats());
-        System.out.println("Numero total de proteins: " + fullDiet.getTotalProteins());
+        System.out.println("Numero total de proteinas: " + fullDiet.getTotalProteins());
         System.out.println("Numero total de calorias: " + fullDiet.getTotalCalories());
     }
     public static void addFood(Diet fullDiet, List<Food> listFood) {
@@ -155,9 +155,10 @@ public class Menu {
                 Integer foodProteins = entry.nextInt();
                 System.out.println("Inserte cantidad en gramos:\n");
                 Integer foodWeight = entry.nextInt();
-                Food newFood = new Food(foodCarbs, foodFats, foodProteins, foodName);
-                listFood.add(newFood);
-                fullDiet.addFood(newFood, foodWeight);
+                Food storedFood = new Food(foodCarbs, foodFats, foodProteins, foodName);
+                listFood.add(storedFood);
+                FoodWithWeight newFood = new FoodWithWeight(storedFood, foodWeight);
+                fullDiet.addFood(newFood);
                 break;
             case "b":
                 if (listFood.isEmpty()){
@@ -182,7 +183,7 @@ public class Menu {
                     Food alimento = listFood.get(selectFood);
                     System.out.println("Escriba la cantidad que desea añadir en gramos:\n");
                     Integer selectQuant = entry.nextInt();
-                    fullDiet.addFood(alimento, selectQuant);
+                    fullDiet.addFood(new FoodWithWeight(alimento, selectQuant)); //Creamos un nuevo FoodWW desde el propio parametro del metodo.
                 }
                 break;
             default:
