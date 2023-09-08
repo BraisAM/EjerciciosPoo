@@ -29,15 +29,4 @@ public class FoodWithWeight extends Food{
     public void setGrams(Integer grams) {
         this.grams = grams;
     }
-//    public Integer getCalories(){
-//        //1 gramo de proteína nos da 4 calorías.
-//        // 1 gramo de carbohidratos nos da 4 calorías.
-//        // 1 gramo de grasa nos da 9 calorías
-//        return(((this.carbs*4)+(fats*9)+(proteins*4))*grams/100);
-//    }
-
-//    public void setFood(Food food) {
-//        this.food = food;
-//    }
-
 }

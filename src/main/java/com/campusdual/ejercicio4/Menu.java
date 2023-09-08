@@ -26,7 +26,6 @@ public class Menu {
         Scanner entry = new Scanner(System.in);
         Integer select;
         Diet fullDiet = null;
-        //List<Food> listFood = new ArrayList<>();
         do {
             System.out.println("~~~~~~~~ Menú ~~~~~~~~\n"+"1.Crear/reiniciar dieta\n"+"2.Mostrar información\n"+"3.Agregar alimento\n"+"4.Salir\n ~~~~~~~~~~~~~~~~~~~~~");
             select = entry.nextInt();
@@ -39,14 +38,11 @@ public class Menu {
                         showData(fullDiet);
                     } else {
                         System.out.println("Primero debe crear una dieta.");
-//                        fullDiet = newDiet();
                     }
                     break;
                 case 3:
                     if (fullDiet == null) {
                         System.out.println("Primero debe crear una dieta.");
-//                        fullDiet = newDiet();
-//                        addFood(fullDiet, listFood);
                     }
                     else {
                         addFood(fullDiet, listFood);

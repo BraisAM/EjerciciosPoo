@@ -30,10 +30,6 @@ public class Diet {
     Integer maxFats;
     Integer maxCarbs;
     Integer maxProteins;
-//    Boolean women;
-//    Integer age;
-//    Integer height;
-//    Integer weight;
     List<FoodWithWeight> listFood;
 
 
@@ -142,30 +138,4 @@ public class Diet {
         }
         return resultProteins;
     }
-
-//    public class FoodWithWeight {
-//        private Food food;
-//        private Integer grams;
-//
-//        public FoodWithWeight(Food food, Integer grams) {
-//            this.food = food;
-//            this.grams = grams;
-//        }
-//
-//        public Food getFood() {
-//            return food;
-//        }
-//
-//        public void setFood(Food food) {
-//            this.food = food;
-//        }
-//
-//        public Integer getGrams() {
-//            return grams;
-//        }
-//
-//        public void setGrams(Integer grams) {
-//            this.grams = grams;
-//        }
-//    }
 }
