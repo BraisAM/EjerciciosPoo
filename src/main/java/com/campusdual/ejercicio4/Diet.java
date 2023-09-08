@@ -79,18 +79,18 @@ public class Diet {
     }
 
     public void addFood(FoodWithWeight food) {
-        listFood.add(food);
-//        if (maxCalories != null && maxCalories < (getTotalCalories() + food.getCalories())) {
-//            System.out.println("Ha superado el límite de calorias establecido.");
-//        }
-//        if (maxCarbs != null && maxFats != null && maxProteins != null) {
-//            if (maxCarbs < (getTotalCarbs() + food.getCarbs()) || maxFats < (getTotalFats() + food.getFats()) || maxProteins < (getTotalProteins() + food.getProteins())) {
-//                System.out.println("Ha superado el límite de macronutrientes establecido.");
-//            }
-//        }
-//        else {
-//            listFood.add(food);
-//        }
+//        listFood.add(food);
+        if (maxCalories != null && maxCalories < (getTotalCalories() + food.calculatedCalories())) {
+            System.out.println("Ha superado el límite de calorias establecido.");
+        }
+        if (maxCarbs != null && maxFats != null && maxProteins != null) {
+            if (maxCarbs < (getTotalCarbs() + food.calculatedCarbs()) || maxFats < (getTotalFats() + food.calculatedFats()) || maxProteins < (getTotalProteins() + food.calculatedProteins())) {
+                System.out.println("Ha superado el límite de macronutrientes establecido.");
+            }
+        }
+        else {
+            listFood.add(food);
+        }
     }
 
     public Integer getTotalCalories() {
