@@ -80,7 +80,7 @@ public class Diet {
 
     public void addFood(FoodWithWeight food) {
         listFood.add(food);
-//        if (maxCalories != null && maxCalories < (getTotalCalories() + food.getCalories(grams))) {
+//        if (maxCalories != null && maxCalories < (getTotalCalories() + food.getCalories())) {
 //            System.out.println("Ha superado el límite de calorias establecido.");
 //        }
 //        if (maxCarbs != null && maxFats != null && maxProteins != null) {
@@ -89,8 +89,7 @@ public class Diet {
 //            }
 //        }
 //        else {
-//            FoodWithWeight newAddFood = new FoodWithWeight(food, grams);
-//            listFood.add(newAddFood);
+//            listFood.add(food);
 //        }
     }
 
