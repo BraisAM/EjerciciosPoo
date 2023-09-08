@@ -18,38 +18,38 @@ import java.util.Scanner;
 	-4. Salir
 */
 public class Menu {
-    private static List<Food> listFood = new ArrayList<>();
+    private static final List<Food> listFood = new ArrayList<>();
     public static void main(String[] args) {
         mainMenu();
     }
     private static void mainMenu(){
         Scanner entry = new Scanner(System.in);
-        Integer select = null;
-        Diet dieta = null;
+        Integer select;
+        Diet fullDiet = null;
         //List<Food> listFood = new ArrayList<>();
         do {
             System.out.println("~~~~~~~~ Menú ~~~~~~~~\n"+"1.Crear/reiniciar dieta\n"+"2.Mostrar información\n"+"3.Agregar alimento\n"+"4.Salir\n ~~~~~~~~~~~~~~~~~~~~~");
             select = entry.nextInt();
             switch (select) {
                 case 1:
-                    dieta = newDiet();
+                    fullDiet = newDiet();
                     break;
                 case 2:
-                    if (dieta != null) {
-                        showData(dieta);
+                    if (fullDiet != null) {
+                        showData(fullDiet);
                     } else {
                         System.out.println("Primero debe crear una dieta.");
-                        dieta = newDiet();
+                        fullDiet = newDiet();
                     }
                     break;
                 case 3:
-                    if (dieta == null) {
+                    if (fullDiet == null) {
                         System.out.println("Debes crear una dieta primero.");
-                        dieta = newDiet();
-                        addFood(dieta, listFood);
+                        fullDiet = newDiet();
+                        addFood(fullDiet, listFood);
                     }
                     else {
-                        addFood(dieta, listFood);
+                        addFood(fullDiet, listFood);
                     }
                     break;
                 case 4:
@@ -132,14 +132,14 @@ public class Menu {
         }
         return newDiet;
     }
-    private static void showData(Diet dieta) {
+    private static void showData(Diet fullDiet) {
         System.out.println("2. Mostrar información: muestra calorías y macronutrientes de la dieta");
-        System.out.println("Numero total de carbos: " + dieta.getTotalCarbs());
-        System.out.println("Numero total de grasas: " + dieta.getTotalFats());
-        System.out.println("Numero total de proteins: " + dieta.getTotalProteins());
-        System.out.println("Numero total de calorias: " + dieta.getTotalCalories());
+        System.out.println("Numero total de carbos: " + fullDiet.getTotalCarbs());
+        System.out.println("Numero total de grasas: " + fullDiet.getTotalFats());
+        System.out.println("Numero total de proteins: " + fullDiet.getTotalProteins());
+        System.out.println("Numero total de calorias: " + fullDiet.getTotalCalories());
     }
-    public static void addFood(Diet dieta, List<Food> listFood) {
+    public static void addFood(Diet fullDiet, List<Food> listFood) {
         Scanner entry = new Scanner(System.in);
         System.out.println("3. Agregar alimento: agrega un alimento a la dieta actual y añade ese alimento a la lista de alimentos disponible\n"+"a.Nuevo alimento\n"+"b.Alimento existente\n");
         String select = entry.next();
@@ -157,12 +157,12 @@ public class Menu {
                 Integer foodWeight = entry.nextInt();
                 Food newFood = new Food(foodCarbs, foodFats, foodProteins, foodName);
                 listFood.add(newFood);
-                dieta.addFood(newFood, foodWeight);
+                fullDiet.addFood(newFood, foodWeight);
                 break;
             case "b":
                 if (listFood.isEmpty()){
                     System.out.println("Ha elegido 'Alimento existente'.\n La lista está vacia, primero debe añadir un alimento nuevo.\n");
-                    addFood(dieta, listFood);
+                    addFood(fullDiet, listFood);
                 }
                 else {
                     System.out.println("Ha elegido 'Alimento existente'. Seleccione un alimento.\n");
@@ -182,7 +182,7 @@ public class Menu {
                     Food alimento = listFood.get(selectFood);
                     System.out.println("Escriba la cantidad que desea añadir en gramos:\n");
                     Integer selectQuant = entry.nextInt();
-                    dieta.addFood(alimento, selectQuant);
+                    fullDiet.addFood(alimento, selectQuant);
                 }
                 break;
             default:

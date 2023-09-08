@@ -81,14 +81,13 @@ public class Diet {
     public void addFood(Food food, Integer grams) {
         if (maxCalories != null && maxCalories < (getTotalCalories() + food.getCalories(grams))) {
             System.out.println("Ha superado el límite de calorias establecido.");
-            return;
         }
         if (maxCarbs != null && maxFats != null && maxProteins != null) {
             if (maxCarbs < (getTotalCarbs() + food.getCarbs()) || maxFats < (getTotalFats() + food.getFats()) || maxProteins < (getTotalProteins() + food.getProteins())) {
                 System.out.println("Ha superado el límite de macronutrientes establecido.");
-                return;
             }
-        } else {
+        }
+        else {
             FoodWithWeight newAddFood = new FoodWithWeight(food, grams);
             listFood.add(newAddFood);
         }
