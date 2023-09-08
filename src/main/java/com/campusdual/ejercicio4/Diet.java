@@ -58,6 +58,7 @@ public class Diet {
 //        this.age = age;
 //        this.height = height;
 //        this.weight = weight;
+        maxBasalCalories = null;
         if (!women) {
             maxBasalCalories = (10 * weight) + (6.25 * height) - (5 * age) + 5;
             System.out.println("Tus calorias máximas son: " + maxBasalCalories);
@@ -83,10 +84,19 @@ public class Diet {
         if (maxCalories != null && maxCalories < (getTotalCalories() + food.calculatedCalories())) {
             System.out.println("Ha superado el límite de calorias establecido.");
         }
+        else {
+            listFood.add(food);
+        }
         if (maxCarbs != null && maxFats != null && maxProteins != null) {
             if (maxCarbs < (getTotalCarbs() + food.calculatedCarbs()) || maxFats < (getTotalFats() + food.calculatedFats()) || maxProteins < (getTotalProteins() + food.calculatedProteins())) {
                 System.out.println("Ha superado el límite de macronutrientes establecido.");
             }
+        }
+        else {
+            listFood.add(food);
+        }
+        if (maxBasalCalories != null && maxBasalCalories < (getTotalCalories() + food.calculatedCalories())) {
+            System.out.println("Ha superado el límite de calorias establecido según tu metabolismo basal.");
         }
         else {
             listFood.add(food);
