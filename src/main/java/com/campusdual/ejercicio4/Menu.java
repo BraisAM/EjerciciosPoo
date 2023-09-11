@@ -128,15 +128,28 @@ public class Menu {
         }
         return newDiet;
     }
-
     private static void showData(Diet fullDiet) {
         System.out.println("2. Mostrar información: muestra calorías y macronutrientes de la dieta");
         System.out.println("Numero total de carbos: " + fullDiet.getTotalCarbs());
+        if (fullDiet.maxCarbs != null){
+            System.out.println("Límite de carbos: " + fullDiet.maxCarbs);
+        }
         System.out.println("Numero total de grasas: " + fullDiet.getTotalFats());
+        if (fullDiet.maxFats != null){
+            System.out.println("Límite de grasas: " + fullDiet.maxFats);
+        }
         System.out.println("Numero total de proteinas: " + fullDiet.getTotalProteins());
+        if (fullDiet.maxProteins != null){
+            System.out.println("Límite de proteinas: " + fullDiet.maxProteins);
+        }
         System.out.println("Numero total de calorias: " + fullDiet.getTotalCalories());
+        if (fullDiet.maxCalories != null) {
+            System.out.println("Límite de calorias: " + fullDiet.maxCalories);
+        }
+        if (fullDiet.maxBasalCalories != null){
+            System.out.println("Límite de calorias: " + fullDiet.maxBasalCalories);
+        }
     }
-
     public static void addFood(Diet fullDiet, List<Food> listFood) {
         Scanner entry = new Scanner(System.in);
         System.out.println("3. Agregar alimento: agrega un alimento a la dieta actual y añade ese alimento a la lista de alimentos disponible\n" + "a.Nuevo alimento\n" + "b.Alimento existente\n");
