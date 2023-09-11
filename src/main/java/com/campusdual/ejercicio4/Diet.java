@@ -32,7 +32,6 @@ public class Diet {
     Integer maxProteins;
     List<FoodWithWeight> listFood;
 
-
     public Diet() {
         listFood = new ArrayList<>();
     }
@@ -63,12 +62,15 @@ public class Diet {
         }
         listFood = new ArrayList<>();
     }
+
     public List<FoodWithWeight> getListFood() {
         return listFood;
     }
+
     public void setListFood(List<FoodWithWeight> listFood) {
         this.listFood = listFood;
     }
+
     public void addFood(FoodWithWeight food) {
         boolean exceededCaloriesLimit = false;
         boolean exceededMacroLimit = false;
@@ -109,8 +111,6 @@ public class Diet {
             listFood.add(food);
         }
     }
-
-
     public Integer getTotalCalories() {
         Integer resultCalories = 0;
         for (FoodWithWeight actualFood :
