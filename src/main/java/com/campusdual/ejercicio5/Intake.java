@@ -1,7 +1,5 @@
 package com.campusdual.ejercicio5;
 
-import com.campusdual.ejercicio4.Food;
-
 public class Intake extends Food {
 
     public static final Integer GRAMS_PER_PORTION = 100;
@@ -12,7 +10,7 @@ public class Intake extends Food {
         super(name);
     }
 
-    public Intake(String name, Integer carbos, Integer fats, Integer proteins,Integer grams) {
+    public Intake(String name, Integer carbos, Integer fats, Integer proteins, Integer grams) {
         super(name, carbos, fats, proteins);
         this.grams = grams;
     }

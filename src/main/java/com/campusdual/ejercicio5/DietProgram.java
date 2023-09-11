@@ -1,11 +1,9 @@
 package com.campusdual.ejercicio5;
 
-import com.campusdual.ejercicio4.Diet;
-import com.campusdual.ejercicio4.Food;
-import com.campusdual.ejercicio4.exceptions.MaxCaloriesReachedException;
-import com.campusdual.ejercicio4.exceptions.MaxCarbsReachedException;
-import com.campusdual.ejercicio4.exceptions.MaxFatsReachedException;
-import com.campusdual.ejercicio4.exceptions.MaxProteinsReachedException;
+import com.campusdual.ejercicio5.exceptions.MaxCaloriesReachedException;
+import com.campusdual.ejercicio5.exceptions.MaxCarbsReachedException;
+import com.campusdual.ejercicio5.exceptions.MaxFatsReachedException;
+import com.campusdual.ejercicio5.exceptions.MaxProteinsReachedException;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -13,7 +11,7 @@ import java.util.List;
 
 public class DietProgram {
 
-    private com.campusdual.ejercicio4.Diet diet=null;
+    private Diet diet=null;
 
     private List<Food> foodList;
 
@@ -158,7 +156,7 @@ public class DietProgram {
         Integer option = getOption(1,4);
         switch (option){
             case 1:
-                this.diet = new com.campusdual.ejercicio4.Diet();
+                this.diet = new Diet();
                 System.out.println("Se ha creado una dieta sin límites");
                 break;
             case 2:
@@ -166,7 +164,7 @@ public class DietProgram {
                 System.out.println("Escriba número de calorias");
                 System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 Integer calories = Kb.forceNextInt();
-                this.diet = new com.campusdual.ejercicio4.Diet(calories);
+                this.diet = new Diet(calories);
                 System.out.println("Se ha creado una dieta con "+calories+" calorías máximas");
                 break;
             case 3:
@@ -179,7 +177,7 @@ public class DietProgram {
                 Integer fats = Kb.forceNextInt();
                 System.out.println("Proteínas:");
                 Integer proteins = Kb.forceNextInt();
-                this.diet = new com.campusdual.ejercicio4.Diet(fats,carbs,proteins);
+                this.diet = new Diet(fats,carbs,proteins);
                 System.out.println("Se ha creado una dieta con Carbohidratos:"+carbs+", Grasas:"+fats+" ,Proteínas:"+proteins);
                 break;
             case 4:
