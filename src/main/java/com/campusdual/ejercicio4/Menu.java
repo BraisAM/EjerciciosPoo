@@ -19,15 +19,17 @@ import java.util.Scanner;
 */
 public class Menu {
     private static final List<Food> listFood = new ArrayList<>();
+
     public static void main(String[] args) {
         mainMenu();
     }
-    private static void mainMenu(){
+
+    private static void mainMenu() {
         Scanner entry = new Scanner(System.in);
         Integer select;
         Diet fullDiet = null;
         do {
-            System.out.println("~~~~~~~~ Menú ~~~~~~~~\n"+"1.Crear/reiniciar dieta\n"+"2.Mostrar información\n"+"3.Agregar alimento\n"+"4.Salir\n ~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("~~~~~~~~ Menú ~~~~~~~~\n" + "1.Crear/reiniciar dieta\n" + "2.Mostrar información\n" + "3.Agregar alimento\n" + "4.Salir\n ~~~~~~~~~~~~~~~~~~~~~");
             select = entry.nextInt();
             switch (select) {
                 case 1:
@@ -43,8 +45,7 @@ public class Menu {
                 case 3:
                     if (fullDiet == null) {
                         System.out.println("Primero debe crear una dieta.");
-                    }
-                    else {
+                    } else {
                         addFood(fullDiet, listFood);
                     }
                     break;
@@ -58,9 +59,10 @@ public class Menu {
         }
         while (select != 4);
     }
+
     private static Diet newDiet() {
         Scanner entry = new Scanner(System.in);
-        System.out.println("1.Crear/reiniciar dieta: crea o remplaza la dieta inicial\n"+"a.Sin límite\n"+"b.Por calorias\n"+"c.Por macronutrientes\n"+"d.Por datos personales\n");
+        System.out.println("1.Crear/reiniciar dieta: crea o remplaza la dieta inicial\n" + "a.Sin límite\n" + "b.Por calorias\n" + "c.Por macronutrientes\n" + "d.Por datos personales\n");
         String select = entry.next();
         Diet newDiet = null;
 
@@ -95,7 +97,7 @@ public class Menu {
                 System.out.println("Ha elegido 'Por datos personales'.\n La dieta va dirigida a un hombre (H) o una mujer (M)?:\n");
                 String gender = entry.next();
                 Boolean women;
-                if (gender.equals("H")){
+                if (gender.equals("H")) {
                     women = false;
                     System.out.println("Ingrese su edad:\n");
                     Integer age = entry.nextInt();
@@ -107,8 +109,7 @@ public class Menu {
                     System.out.println("Has creado una dieta para un hombre de " + age + " años, " + height + "cm de altura, y " + weight + "kg de peso.");
                     System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                     newDiet = new Diet(false, age, height, weight);
-                }
-                else if (gender.equals("M")){
+                } else if (gender.equals("M")) {
                     women = true;
                     System.out.println("Ingrese su edad:\n");
                     Integer age = entry.nextInt();
@@ -117,8 +118,7 @@ public class Menu {
                     System.out.println("Ingrese su peso en kilos:\n");
                     Integer weight = entry.nextInt();
                     newDiet = new Diet(true, age, height, weight);
-                }
-                else {
+                } else {
                     System.out.println("No ha seleccionado una opción valida. Debes introducir 'H' para Hombre o 'M' para Mujer.");
                 }
                 break;
@@ -128,6 +128,7 @@ public class Menu {
         }
         return newDiet;
     }
+
     private static void showData(Diet fullDiet) {
         System.out.println("2. Mostrar información: muestra calorías y macronutrientes de la dieta");
         System.out.println("Numero total de carbos: " + fullDiet.getTotalCarbs());
@@ -135,11 +136,12 @@ public class Menu {
         System.out.println("Numero total de proteinas: " + fullDiet.getTotalProteins());
         System.out.println("Numero total de calorias: " + fullDiet.getTotalCalories());
     }
+
     public static void addFood(Diet fullDiet, List<Food> listFood) {
         Scanner entry = new Scanner(System.in);
-        System.out.println("3. Agregar alimento: agrega un alimento a la dieta actual y añade ese alimento a la lista de alimentos disponible\n"+"a.Nuevo alimento\n"+"b.Alimento existente\n");
+        System.out.println("3. Agregar alimento: agrega un alimento a la dieta actual y añade ese alimento a la lista de alimentos disponible\n" + "a.Nuevo alimento\n" + "b.Alimento existente\n");
         String select = entry.next();
-        switch (select){
+        switch (select) {
             case "a":
                 System.out.println("Ha elegido 'Nuevo alimento'.\n Escriba el nombre del alimento que desea añadir:\n");
                 String foodName = entry.next();
@@ -157,29 +159,38 @@ public class Menu {
                 fullDiet.addFood(newFood);
                 break;
             case "b":
-                if (listFood.isEmpty()){
+                if (listFood.isEmpty()) {
                     System.out.println("Ha elegido 'Alimento existente'.\n La lista está vacia, primero debe añadir un alimento nuevo.\n");
                     addFood(fullDiet, listFood);
-                }
-                else {
+                } else {
                     System.out.println("Ha elegido 'Alimento existente'. Seleccione un alimento.\n");
                     for (int i = 0; i < listFood.size(); i++) {
                         System.out.println(i + ". " + listFood.get(i).getFoodName());
                     }
+                    System.out.println(listFood.size() + ". Cancelar");
                     Integer selectFood = null;
+                    boolean validInput = false;
                     do {
-                        selectFood = entry.nextInt();
-                        if (selectFood < 0 || selectFood >= listFood.size()) {
-                            System.out.println("Ingrese un numero valido entre 0 y " + (listFood.size() - 1) + ":\n");
+                        try {
+                            String input = entry.next();
+                            selectFood = Integer.parseInt(input); // Intenta convertir la entrada a un número
+                            if (selectFood < 0 || selectFood > listFood.size()) {
+                                System.out.println("Ingrese un numero valido entre 0 y " + (listFood.size()) + ":\n");
+                            } else if (selectFood == listFood.size()) {
+                                // El usuario seleccionó "Cancelar", regresa al menú principal
+                                return;
+                            } else {
+                                Food alimento = listFood.get(selectFood);
+                                System.out.println("Escriba la cantidad que desea añadir en gramos:\n");
+                                Integer selectQuant = entry.nextInt();
+                                fullDiet.addFood(new FoodWithWeight(alimento, selectQuant)); //Creamos un nuevo FoodWW desde el propio parametro del metodo.
+                                validInput = true; // La entrada es válida, sal del bucle
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Ingrese un número válido:");
                         }
                     }
-                    while (
-                            selectFood < 0 || selectFood >= listFood.size()
-                    );
-                    Food alimento = listFood.get(selectFood);
-                    System.out.println("Escriba la cantidad que desea añadir en gramos:\n");
-                    Integer selectQuant = entry.nextInt();
-                    fullDiet.addFood(new FoodWithWeight(alimento, selectQuant)); //Creamos un nuevo FoodWW desde el propio parametro del metodo.
+                    while (!validInput);
                 }
                 break;
             default:

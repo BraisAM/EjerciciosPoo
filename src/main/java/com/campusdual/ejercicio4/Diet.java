@@ -50,10 +50,6 @@ public class Diet {
     }
 
     public Diet(Boolean women, Integer age, Integer height, Integer weight) {
-//        this.women = women;
-//        this.age = age;
-//        this.height = height;
-//        this.weight = weight;
         maxBasalCalories = null;
         if (!women) {
             maxBasalCalories = (10 * weight) + (6.25 * height) - (5 * age) + 5;
@@ -70,34 +66,50 @@ public class Diet {
     public List<FoodWithWeight> getListFood() {
         return listFood;
     }
-
     public void setListFood(List<FoodWithWeight> listFood) {
         this.listFood = listFood;
     }
-
     public void addFood(FoodWithWeight food) {
-//        listFood.add(food);
+        boolean exceededCaloriesLimit = false;
+        boolean exceededMacroLimit = false;
+        boolean exceededBasalCaloriesLimit = false;
+
+        // Verificar límites de calorías si maxCalories está configurado
         if (maxCalories != null && maxCalories < (getTotalCalories() + food.calculatedCalories())) {
-            System.out.println("Ha superado el límite de calorias establecido.");
+            exceededCaloriesLimit = true;
         }
-        else {
-            listFood.add(food);
-        }
-        if (maxCarbs != null && maxFats != null && maxProteins != null) {
-            if (maxCarbs < (getTotalCarbs() + food.calculatedCarbs()) || maxFats < (getTotalFats() + food.calculatedFats()) || maxProteins < (getTotalProteins() + food.calculatedProteins())) {
-                System.out.println("Ha superado el límite de macronutrientes establecido.");
+
+        // Verificar límites de macronutrientes si maxFats, maxCarbs y maxProteins están configurados
+        if (maxFats != null && maxCarbs != null && maxProteins != null) {
+            if (maxCarbs < (getTotalCarbs() + food.calculatedCarbs()) ||
+                    maxFats < (getTotalFats() + food.calculatedFats()) ||
+                    maxProteins < (getTotalProteins() + food.calculatedProteins())) {
+                exceededMacroLimit = true;
             }
         }
-        else {
-            listFood.add(food);
-        }
+
+        // Verificar límite de calorías basales si maxBasalCalories está configurado
         if (maxBasalCalories != null && maxBasalCalories < (getTotalCalories() + food.calculatedCalories())) {
-            System.out.println("Ha superado el límite de calorias establecido según tu metabolismo basal.");
+            exceededBasalCaloriesLimit = true;
         }
-        else {
+
+        // Ahora, verificar si se superaron los límites y mostrar mensajes si es necesario
+        if (exceededCaloriesLimit || exceededMacroLimit || exceededBasalCaloriesLimit) {
+            if (exceededCaloriesLimit) {
+                System.out.println("Ha superado el límite de calorías establecido.");
+            }
+            if (exceededMacroLimit) {
+                System.out.println("Ha superado el límite de macronutrientes establecido.");
+            }
+            if (exceededBasalCaloriesLimit) {
+                System.out.println("Ha superado el límite de calorías establecido según tu metabolismo basal.");
+            }
+        } else {
+            // Solo si no se superaron los límites, agregar el alimento
             listFood.add(food);
         }
     }
+
 
     public Integer getTotalCalories() {
         Integer resultCalories = 0;

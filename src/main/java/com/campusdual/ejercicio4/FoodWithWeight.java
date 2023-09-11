@@ -15,13 +15,13 @@ public class FoodWithWeight extends Food{
         return this.getCalories(this.grams);
     }
     public Integer calculatedCarbs(){
-        return this.getCarbs() * this.getGrams() / this.GRAMS_PER_PORTION;
+        return this.getCarbs() * this.getGrams() / GRAMS_PER_PORTION;
     }
     public Integer calculatedFats(){
-        return this.getFats() * this.getGrams() / this.GRAMS_PER_PORTION;
+        return this.getFats() * this.getGrams() / GRAMS_PER_PORTION;
     }
     public Integer calculatedProteins(){
-        return this.getProteins() * this.getGrams() / this.GRAMS_PER_PORTION;
+        return this.getProteins() * this.getGrams() / GRAMS_PER_PORTION;
     }
     public Integer getGrams() {
         return grams;
