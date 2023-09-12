@@ -2,7 +2,7 @@ package com.campusdual.ejercicio5;
 
 //--Teniendo en cuenta el programa anterior(ejercicio4):
 //--Realiza los cambios necesarios para:
-//  -La dieta ya no será única si no que se guardará en una lista de dietas. Esta lista tendrá un nombre para poder ser recuperado. Será necesario cambiar el menú para gestionar esta lista. Ahora en ved de crear/reemplazar dieta lo que haremos será:
+//  -La dieta ya no será única si no que se guardará en una lista de dietas. Esta lista tendrá un nombre para poder ser recuperado. Será necesario cambiar el menú para gestionar esta lista. Ahora en vez de crear/reemplazar dieta lo que haremos será:
 //    a- Agregar dieta: Añade una dieta a la lista. Podemos reutilizar el menú antiguo de crear/reemplazar
 //    b- Mostrar detalles de dieta: Muestra los detalles de una dieta y permite modificarla
 //    c- Eliminar dieta: Elimina una dieta de la lista(Siempre que no la tenga asignada un paciente)

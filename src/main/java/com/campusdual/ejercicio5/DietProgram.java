@@ -6,7 +6,6 @@ import com.campusdual.ejercicio5.exceptions.MaxFatsReachedException;
 import com.campusdual.ejercicio5.exceptions.MaxProteinsReachedException;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 
 public class DietProgram {
@@ -14,78 +13,112 @@ public class DietProgram {
     private Diet diet=null;
 
     private List<Food> foodList;
+    private List<String> clientList = new ArrayList<>();
 
     public DietProgram(){
         foodList = new ArrayList<>();
     }
 
-    private Integer getOption(Integer min,Integer max){
-        Integer option = 0;
-        Boolean notvalid = true;
-        do{
-            try {
-                option = Kb.forceNextInt();
-                notvalid = option<min || option>max;
-            }catch (InputMismatchException e){
-                System.out.println("La opción debe ser un número");
-                Kb.nextLine();
-            }
-            if(notvalid){
-                System.out.println("Opción no valida, se requiere un número entre "+min+" y "+max);
-            }
-        }while(notvalid);
-        return option;
-    }
-
     public void showMenuProgram(){
-        System.out.println("########################################################");
-        System.out.println("################# Programa de dietas ###################");
-        System.out.println("########################################################");
+        System.out.println("\n" +
+                "█▀█ █▀█ █▀█ █▀▀ █▀█ ▄▀█ █▀▄▀█ ▄▀█   █▀▄ █▀▀   █▀▄ █ █▀▀ ▀█▀ ▄▀█ █▀\n" +
+                "█▀▀ █▀▄ █▄█ █▄█ █▀▄ █▀█ █░▀░█ █▀█   █▄▀ ██▄   █▄▀ █ ██▄ ░█░ █▀█ ▄█");
         Integer option;
         do{
             System.out.println("Escriba una opción:");
-            System.out.println("===================================");
-            System.out.println("1-Crear/reiniciar dieta");
-            System.out.println("2-Mostrar información de la dieta");
-            System.out.println("3-Agregar alimento al plan actual");
-            System.out.println("4-Salir del programa");
-            option = getOption(1,4);
+            System.out.println("====================");
+            System.out.println("1-Dietas");
+            System.out.println("2-Clientes");
+            System.out.println("3-Salir del programa");
+            System.out.println("====================\n");
+            option = Kb.getOption(1,3);
             switch (option){
                 case 1:
-                    createMenu();
+                    dietsMenu();
                     break;
                 case 2:
-                    showDetailsMenu();
+                    clientsMenu();
                     break;
                 case 3:
-                    addFoodMenu();
-                    break;
-                case 4:
                     System.out.println("Gracias por usar el programa, hasta pronto :)");
                     break;
             }
-        }while(option != 4);
+        }while(option != 3);
     }
 
+    private void dietsMenu(){
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@           Dietas           @");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("Escriba una opción:");
+        System.out.println("=============================");
+        System.out.println("1-Agregar dieta");
+        System.out.println("2-Mostrar detalles de dietas");
+        System.out.println("3-Eliminar dieta");
+        System.out.println("4-Volver");
+        System.out.println("=============================\n");
+        Integer option = Kb.getOption(1,4);
+        switch (option){
+            case 1:
+                createDietMenu();
+                break;
+            case 2:
+                showDietDetails();
+                break;
+            case 3:
+                deleteDiet();
+                break;
+            case 4:
+        }
+    }
+    private void clientsMenu(){
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@           Clientes          @");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("Escriba una opción:");
+        System.out.println("==============================");
+        System.out.println("1-Alta cliente");
+        System.out.println("2-Mostrar detalles de clientes");
+        System.out.println("3-Asignar dieta");
+        System.out.println("4-Baja cliente");
+        System.out.println("5-Volver");
+        System.out.println("==============================\n");
+        Integer option = Kb.getOption(1,5);
+        switch (option){
+            case 1:
+                newClient();
+                break;
+            case 2:
+                showClientDetails();
+                break;
+            case 3:
+                asignClientDiet();
+                break;
+            case 4:
+                deleteClient();
+            case 5:
+        }
+    }
     private void addFoodMenu() {
         if(this.diet==null){
             System.out.println("Para agregar alimentos hace falta iniciar una dieta");
             return;
         }
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("Agregar Alimentos a la dieta");
+        System.out.println("@   Agregar alimentos a la dieta  @");
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         System.out.println("Escriba una opción:");
         System.out.println("===================================");
         System.out.println("1-Agregar un nuevo alimento");
         System.out.println("2-Agregar un alimento ya existente");
+        System.out.println("===================================");
 
-        Integer option = getOption(1,2);
+        Integer option = Kb.getOption(1,2);
         switch (option){
             case 1:
-                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                System.out.println("Datos de nuevo alimento");
-                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                System.out.println("@    Datos de nuevo alimento    @");
+                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 System.out.println("Nombre del alimento:");
                 String name = Kb.nextLine();
                 System.out.println("Carbohidratos:");
@@ -105,16 +138,16 @@ public class DietProgram {
                     System.out.println("Para agregar un alimento existente, tienen que existir alimentos previos");
                     return;
                 }
-                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                System.out.println("Escoja un alimento");
-                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                System.out.println("@    Escoja un alimento     @");
+                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 Integer i = 1;
                 for(Food food:foodList){
                     System.out.println(i+"- "+food.getName());
                     i++;
                 }
                 System.out.println(i+"- Cancelar");
-                Integer element = getOption(1,i);
+                Integer element = Kb.getOption(1,i);
                 if(element==i){
                     System.out.println("Cancelando alimento");
                     return;
@@ -143,9 +176,9 @@ public class DietProgram {
         }
     }
 
-    private void createMenu() {
+    private void createDietMenu() {
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("Crear/reiniciar dieta");
+        System.out.println("@      Crear/reiniciar dieta      @");
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         System.out.println("Escriba una opción:");
         System.out.println("===================================");
@@ -153,7 +186,7 @@ public class DietProgram {
         System.out.println("2-Dieta por calorías");
         System.out.println("3-Dieta por macronutrientes");
         System.out.println("4-Dieta por datos personales");
-        Integer option = getOption(1,4);
+        Integer option = Kb.getOption(1,4);
         switch (option){
             case 1:
                 this.diet = new Diet();
@@ -161,7 +194,7 @@ public class DietProgram {
                 break;
             case 2:
                 System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                System.out.println("Escriba número de calorias");
+                System.out.println("@    Escriba número de calorias   @");
                 System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 Integer calories = Kb.forceNextInt();
                 this.diet = new Diet(calories);
@@ -169,7 +202,7 @@ public class DietProgram {
                 break;
             case 3:
                 System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                System.out.println("Escriba los macronutrientes");
+                System.out.println("@   Escriba los macronutrientes   @");
                 System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 System.out.println("Carbohidratos:");
                 Integer carbs = Kb.forceNextInt();
@@ -181,9 +214,9 @@ public class DietProgram {
                 System.out.println("Se ha creado una dieta con Carbohidratos:"+carbs+", Grasas:"+fats+" ,Proteínas:"+proteins);
                 break;
             case 4:
-                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                System.out.println("Escriba los datos personales del paciente");
-                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                System.out.println("@  Escriba los datos personales del cliente  @");
+                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 System.out.println("Peso:");
                 Integer weight = Kb.forceNextInt();
                 System.out.println("Altura:");
@@ -198,10 +231,10 @@ public class DietProgram {
         }
     }
 
-    private void showDetailsMenu() {
+    private void showDietDetails() {
         if(this.diet!=null){
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            System.out.println("Detalles de la dieta");
+            System.out.println("@       Detalles de la dieta      @");
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             if(this.diet.getMaxCalories()!=null){
                 System.out.println("El número máximo de calorías es:"+this.diet.getMaxCalories());
@@ -209,16 +242,31 @@ public class DietProgram {
             if(this.diet.getMaxCarbs() != null || this.diet.getMaxFats() != null || this.diet.getMaxProteins() != null){
                 System.out.println("Los valores máximos de macronutrientes son: Carbohidratos:"+this.diet.getMaxCarbs()+" , Grasas:"+this.diet.getMaxFats()+" , Proteinas:"+this.diet.getMaxProteins());
             }
-            System.out.println("Número de alimentos de la dieta:"+this.diet.getFoodNumber());
-            System.out.println("Calorías:"+this.diet.getTotalCalories());
-            System.out.println("Carbohidratos:"+this.diet.getTotalCarbs());
-            System.out.println("Grasas:"+this.diet.getTotalFats());
-            System.out.println("Proteínas:"+this.diet.getTotalProteins());
-            System.out.println("Alimentos de la dieta:"+this.diet.getDietIntakes());
+            System.out.println("Número de alimentos de la dieta: "+this.diet.getFoodNumber());
+            System.out.println("Calorías: "+this.diet.getTotalCalories());
+            System.out.println("Carbohidratos: "+this.diet.getTotalCarbs());
+            System.out.println("Grasas: "+this.diet.getTotalFats());
+            System.out.println("Proteínas: "+this.diet.getTotalProteins());
+            System.out.println("Alimentos de la dieta: "+this.diet.getDietIntakes());
         }else{
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            System.out.println("La dieta no esta iniciada");
+            System.out.println("@    La dieta no esta iniciada    @");
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         }
+    }
+    private void newClient(){
+
+    }
+    private void deleteDiet(){
+
+    }
+    private void showClientDetails(){
+
+    }
+    private void asignClientDiet(){
+
+    }
+    private void deleteClient(){
+
     }
 }
