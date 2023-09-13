@@ -30,7 +30,28 @@ public class Kb {
         return resultado;
     }
 
+    public static Integer forceNextInt(String sout){
+        System.out.println(sout);
+        Integer resultado = null;
+        boolean notvalid=true;
+        do {
+            try {
+                resultado = nextInt();
+                notvalid=false;
+            } catch (InputMismatchException e) {
+                System.out.println("Es necesario que sea un número");
+            }
+        }while(notvalid);
+        return resultado;
+    }
+
     public static String nextLine(){
+        Scanner keyboard = new Scanner(System.in);
+        String result = keyboard.nextLine();
+        return result;
+    }
+    public static String nextLine(String sout){
+        System.out.println(sout);
         Scanner keyboard = new Scanner(System.in);
         String result = keyboard.nextLine();
         return result;
