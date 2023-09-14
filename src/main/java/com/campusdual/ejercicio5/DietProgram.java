@@ -1,9 +1,6 @@
 package com.campusdual.ejercicio5;
 
-import com.campusdual.ejercicio5.exceptions.MaxCaloriesReachedException;
-import com.campusdual.ejercicio5.exceptions.MaxCarbsReachedException;
-import com.campusdual.ejercicio5.exceptions.MaxFatsReachedException;
-import com.campusdual.ejercicio5.exceptions.MaxProteinsReachedException;
+import com.campusdual.ejercicio5.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,10 +84,10 @@ public class DietProgram {
                 showDietDetails();
                 break;
             case 3:
-                deleteDiet();
+                addFoodMenu();
                 break;
             case 4:
-                addFoodMenu();
+                deleteDiet();
                 break;
             case 5:
                 break;
@@ -131,6 +128,7 @@ public class DietProgram {
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         System.out.println("@   Agregar alimentos a la dieta  @");
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("'" + activeDiet + "'");
         System.out.println("Escriba una opción:");
         System.out.println("===================================");
         System.out.println("1-Agregar un nuevo alimento");
@@ -148,10 +146,19 @@ public class DietProgram {
                 Integer fats = Kb.forceNextInt("Grasas:");
                 Integer proteins = Kb.forceNextInt("Proteínas:");
                 Integer grams = Kb.forceNextInt("Gramos:");
-                Food newFood = new Food(name,carbs,fats,proteins);
-                validateAndAddFoodToDiet(newFood,grams);
-                foodList.add(newFood);
-                //dietsList.put(activeDiet, dietsList.get(activeDiet, newFood));
+                Food newFood = new Food(name, carbs, fats, proteins);
+                try {
+                    diet.addFood(newFood, grams);
+                    System.out.println("Se han añadido " + grams + " gramos de " + newFood.getName() + " a la dieta '" + activeDiet + "'");
+                } catch (MaxValuedReachedException e) {
+                    // Excepciones si se alcanzan los valores máximos permitidos
+                    System.out.println("No se pudo añadir el alimento debido a restricciones de dieta.");
+                }
+
+//                Food newFood = new Food(name,carbs,fats,proteins);
+//                validateAndAddFoodToDiet(newFood,grams);
+//                foodList.add(newFood);
+//                dietsList.put(activeDiet, dietsList.get(activeDiet, newFood));
                 break;
             case 2:
                 if(foodList.isEmpty()){
@@ -214,6 +221,7 @@ public class DietProgram {
                 String dietName = Kb.nextLine("Nombre de la dieta:");
                 dietsList.put(dietName, diet);
                 System.out.println("Se ha creado una dieta sin límites llamada '" + dietName + "'");
+                activeDiet = dietName;
                 break;
             case 2:
                 String dietNameCal = Kb.nextLine("Nombre de la dieta:");
@@ -302,7 +310,6 @@ public class DietProgram {
     public void selectClient() {
         int i;
         Integer tempList;
-        String clientName;
 
         // Recorremos lista de clientes y los mostramos
         if (clientsList.isEmpty()) {
