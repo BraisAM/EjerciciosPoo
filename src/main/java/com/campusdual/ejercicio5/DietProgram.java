@@ -499,7 +499,7 @@ public class DietProgram {
         activeDiet = null;
         System.out.println("Dieta eliminada con éxito. Espero que no te equivocaras al darle.");
     }
-    private void asignClientDiet(){
+    private void asignClientDiet() {
 
     }
     private void deleteClient(){

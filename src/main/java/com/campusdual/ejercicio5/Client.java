@@ -1,5 +1,7 @@
 package com.campusdual.ejercicio5;
 
+import java.util.HashMap;
+
 public class Client {
     private String clientName;
     private String clientSurname;
@@ -7,6 +9,7 @@ public class Client {
     private Integer clientHeight;
     private Integer clientAge;
     private String clientGender;
+    private HashMap<Integer, String> dietAssignments; // Mapa para almacenar las asignaciones de dieta por día
 
     public Client(String clientName, String clientSurname, Integer clientWeight, Integer clientHeight, Integer clientAge, String clientGender) {
         this.clientName = clientName;
@@ -82,3 +85,4 @@ public class Client {
         this.clientGender = clientGender;
     }
 }
+
