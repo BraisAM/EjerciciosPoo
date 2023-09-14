@@ -359,9 +359,12 @@ public class DietProgram {
         System.out.println("4-Cambiar Proteinas máximas");
     }
     private void deleteDiet(){
-        dietsList.remove(activeDiet);
-        activeDiet = null;
-        System.out.println("Dieta eliminada con éxito. Espero que no te equivocaras al darle.");
+        String youSure = Kb.nextLine("¿Está seguro de que desea eliminar la dieta " + activeDiet + " ? S/N");
+        if (youSure.equals("S")) {
+            dietsList.remove(activeDiet);
+            System.out.println("Dieta " + activeDiet + " eliminada con éxito.\n");
+            activeDiet = null;
+        } else System.out.println("Menos mal que te pregunté, casi la lias.\n");
     }
     private void validateAndAddFoodToDiet(Food food, Integer grams){
         Diet diet = dietsList.get(activeDiet);
@@ -518,9 +521,11 @@ public class DietProgram {
         //TODO Programar todo el método
     }
     private void deleteClient(){
-        if (clientsList.remove(activeClient)) {
-            System.out.println("Cliente eliminado con éxito. Espero que no te equivocaras al darle.");
-            activeClient = null;
-        } else System.out.println("Error 404 No se ha borrado el cliente.");
+            String youSure = Kb.nextLine("¿Está seguro de que desea eliminar el cliente " + activeClient + " ? S/N");
+            if (youSure.equals("S")) {
+                clientsList.remove(activeClient);
+                System.out.println("Cliente " + activeClient + " eliminado con éxito.\n");
+                activeClient = null;
+            } else System.out.println("Menos mal que te pregunté, casi la lias.\n");
     }
 }
