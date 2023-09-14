@@ -96,17 +96,18 @@ public class DietProgram {
         }
     }
     private void clientsMenu(){
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("@       Clientes      @");
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@      Clientes     @");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@");
         System.out.println("Escriba una opción:");
         System.out.println("=====================");
         System.out.println("1-Lista de clientes");
         System.out.println("2-Buscar por nombre");
         System.out.println("3-Nuevo cliente");
-        System.out.println("4-Volver");
+        System.out.println("4-Cliente activo");
+        System.out.println("5-Volver");
         System.out.println("=====================");
-        Integer option = Kb.getOption(1,4);
+        Integer option = Kb.getOption(1,5);
         switch (option){
             case 1:
                 selectClient();
@@ -118,6 +119,11 @@ public class DietProgram {
                 newClient();
                 break;
             case 4:
+                if (activeClient == null){
+                    System.out.println("Primero debe seleccionar un cliente.");
+                } else activeClientMenu();
+                break;
+            case 5:
                 break;
         }
     }
@@ -196,7 +202,7 @@ public class DietProgram {
             for (String dietName : dietsList.keySet()) {
                 System.out.println("- " + dietName);
             }
-            String select = Kb.nextLine("¿Qué dieta quieres ver?");
+            String select = Kb.nextLine("Seleccione una dieta:");
             activeDiet = select; // Almacena solo la clave
             System.out.println("Has seleccionado '" + activeDiet + "'");
 
@@ -204,10 +210,44 @@ public class DietProgram {
         }
     }
     private void searchDiet(){
+        //TODO Crear metodo para busqueda de dieta por nombre
 
+        String searchDiet = Kb.nextLine("Escribe el nombre de la dieta:");
+        if (dietsList.get(searchDiet) == null){
+            System.out.println("La dieta que busca no existe.");
+        } else {
+            System.out.println("Dieta seleccionada: " + searchDiet);
+            activeDiet = searchDiet;
+
+            activeDietMenu();
+        }
     }
     private void activeDietMenu(){
-        System.out.println("Hola toi aqui :)");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@       Dieta      @");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("'" + activeDiet + "'");
+        System.out.println("Escriba una opción:");
+        System.out.println("====================");
+        System.out.println("1-Detalles de la dieta");
+        System.out.println("2-Añadir alimento");
+        System.out.println("3-Eliminar dieta");
+        System.out.println("4-Volver");
+        System.out.println("====================");
+        Integer option = Kb.getOption(1,4);
+        switch (option){
+            case 1:
+                showDietDetails();
+                break;
+            case 2:
+                addFoodMenu();
+                break;
+            case 3:
+                deleteDiet();
+                break;
+            case 4:
+                break;
+        }
     }
     private void validateAndAddFoodToDiet(Food food, Integer grams){
         Diet diet = dietsList.get(activeDiet);
@@ -284,14 +324,6 @@ public class DietProgram {
     }
 
     private void showDietDetails() {
-        System.out.println("Lista de dietas:");
-        for (String dietName : dietsList.keySet()) {
-            System.out.println("- " + dietName);
-        }
-        String select = Kb.nextLine("¿Qué dieta quieres ver?");
-        activeDiet = select; // Almacena solo la clave
-        System.out.println("Has seleccionado '" + activeDiet + "'");
-
         Diet diet = dietsList.get(activeDiet); // Accede al valor correspondiente en el mapa
         // Ahora puedes trabajar con la dieta seleccionada
         if (diet == null) {
@@ -429,14 +461,16 @@ public class DietProgram {
         activeClientMenu();
     }
     private void deleteDiet(){
-
+        dietsList.remove(activeDiet);
+        activeDiet = null;
+        System.out.println("Dieta eliminada con éxito. Espero que no te equivocaras al darle.");
     }
     private void asignClientDiet(){
 
     }
     private void deleteClient(){
         if (clientsList.remove(activeClient)) {
-            System.out.println("Cliente eliminado con éxito.");
+            System.out.println("Cliente eliminado con éxito. Espero que no te equivocaras al darle.");
             activeClient = null;
         } else System.out.println("Error 404 No se ha borrado el cliente.");
     }
