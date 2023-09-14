@@ -16,7 +16,9 @@ public class DietProgram {
 
     public DietProgram(){
         foodList = new ArrayList<>();
+
         //Inicializacion alimentos predefinidos
+
         Food tofu = new Food("Tofu", 1, 7, 11);
         Food garbanzos = new Food("Garbanzos", 30, 3, 10);
         Food seitan = new Food("Seitan", 4, 2, 25);
@@ -33,6 +35,8 @@ public class DietProgram {
         foodList.add(macarrones);
         clientsList = new ArrayList<>();
         dietsList = new HashMap<>();
+
+        //Inicializacion alimentos predefinidos
     }
 
     public List<Client> getClientsList() {
