@@ -69,25 +69,27 @@ public class DietProgram {
         System.out.println("@@@@@@@@@@@@@@@@@@@@");
         System.out.println("Escriba una opción:");
         System.out.println("====================");
-        System.out.println("1-Agregar dieta");
-        System.out.println("2-Detalles de dieta");
-        System.out.println("3-Agregar alimento");
-        System.out.println("4-Eliminar dieta");
+        System.out.println("1-Lista de dietas");
+        System.out.println("2-Buscar dieta");
+        System.out.println("3-Nueva dieta");
+        System.out.println("4-Dieta activa");
         System.out.println("5-Volver");
         System.out.println("====================");
         Integer option = Kb.getOption(1,5);
         switch (option){
             case 1:
-                createDietMenu();
+                selectDiet();
                 break;
             case 2:
-                showDietDetails();
+                searchDiet();
                 break;
             case 3:
-                addFoodMenu();
+                createDietMenu();
                 break;
             case 4:
-                deleteDiet();
+                if (activeDiet == null){
+                    System.out.println("Primero debe seleccionar una dieta.");
+                } else activeDietMenu();
                 break;
             case 5:
                 break;
@@ -186,7 +188,27 @@ public class DietProgram {
                 break;
         }
     }
+    private void selectDiet(){
+        if (dietsList.isEmpty()){
+            System.out.println("No tienes ninguna dieta creada.");
+        } else {
+            System.out.println("Lista de dietas:");
+            for (String dietName : dietsList.keySet()) {
+                System.out.println("- " + dietName);
+            }
+            String select = Kb.nextLine("¿Qué dieta quieres ver?");
+            activeDiet = select; // Almacena solo la clave
+            System.out.println("Has seleccionado '" + activeDiet + "'");
 
+            activeDietMenu();
+        }
+    }
+    private void searchDiet(){
+
+    }
+    private void activeDietMenu(){
+        System.out.println("Hola toi aqui :)");
+    }
     private void validateAndAddFoodToDiet(Food food, Integer grams){
         Diet diet = dietsList.get(activeDiet);
         try{
@@ -257,6 +279,8 @@ public class DietProgram {
                 System.out.println("Se ha creado una dieta de "+dietPersonal.getMaxCalories()+" calorías máximas");
                 break;
         }
+
+        activeDietMenu();
     }
 
     private void showDietDetails() {
@@ -411,7 +435,9 @@ public class DietProgram {
 
     }
     private void deleteClient(){
-        clientsList.remove(activeClient);
-        System.out.println("Cliente eliminado con éxito.");
+        if (clientsList.remove(activeClient)) {
+            System.out.println("Cliente eliminado con éxito.");
+            activeClient = null;
+        } else System.out.println("Error 404 No se ha borrado el cliente.");
     }
 }
