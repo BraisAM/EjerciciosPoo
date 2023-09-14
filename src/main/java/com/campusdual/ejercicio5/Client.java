@@ -27,7 +27,7 @@ public class Client {
         System.out.println("Peso: " + this.clientWeight);
         System.out.println("Altura: " + this.clientHeight);
         System.out.println("Edad: " + this.clientAge);
-        System.out.println("Género: " + this.clientGender);
+        System.out.println("Género: " + this.clientGender + "\n");
     }
 
     @Override

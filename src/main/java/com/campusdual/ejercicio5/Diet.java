@@ -167,9 +167,9 @@ public class Diet {
         for(Intake intake:intakes){
             if(first){
                 first = false;
-                result = intake.getName()+":"+intake.getGrams();
+                result = intake.getName()+": "+intake.getGrams() + "gr\n";
             }else{
-                result = result + ", "+intake.getName()+":"+intake.getGrams();
+                result = result + intake.getName()+":"+intake.getGrams()+ "gr\n";
             }
         }
         return result;
