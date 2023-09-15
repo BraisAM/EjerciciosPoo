@@ -523,7 +523,35 @@ public class DietProgram {
         //TODO ~~~~~~~~~~~~~~~~~~~~~~~~
         //TODO ~~~~~~~~~~~~~~~~~~~~~~~~
         //TODO Programar todo el método
+
+        System.out.println("Elija un dia:");
+        System.out.println("1-Lunes");
+        System.out.println("2-Martes");
+        System.out.println("3-Miercoles");
+        System.out.println("4-Jueves");
+        System.out.println("5-Viernes");
+        System.out.println("6-Sabado");
+        System.out.println("7-Domingo");
+        System.out.println("8-Salir");
+        Integer selectedDay = Kb.forceNextInt();
+
+       // String dietName = getSelectDiet();
+
+
     }
+//    private String getSelectDiet(){
+//        if (dietsList.isEmpty()){
+//            System.out.println("No tienes ninguna dieta creada.");
+//        } else {
+//            System.out.println("Lista de dietas:");
+//            for (String dietName : dietsList.keySet()) {
+//                System.out.println("- " + dietName);
+//            }
+//            String select = Kb.nextLine("Seleccione una dieta:");
+//
+//        }
+//    }
+
     private void deleteClient(){
             String youSure = Kb.nextLine("¿Está seguro de que desea eliminar el cliente " + activeClient + " ? S/N");
             if (youSure.equals("S")) {
