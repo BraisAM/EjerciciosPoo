@@ -1,6 +1,8 @@
 package com.campusdual.ejercicio5;
 
-import java.util.HashMap;
+import com.campusdual.ejercicio5.enums.Days;
+
+import java.util.Map;
 
 public class Client {
     private String clientName;
@@ -9,7 +11,7 @@ public class Client {
     private Integer clientHeight;
     private Integer clientAge;
     private String clientGender;
-    private HashMap<Integer, String> dietAssignments; // Mapa para almacenar las asignaciones de dieta por día
+    private Map<Days,String> dietList;
 
     public Client(String clientName, String clientSurname, Integer clientWeight, Integer clientHeight, Integer clientAge, String clientGender) {
         this.clientName = clientName;
@@ -19,11 +21,12 @@ public class Client {
         this.clientAge = clientAge;
         this.clientGender = clientGender;
     }
-    public Client(){
+
+    public Client() {
 
     }
 
-    public void showClientDetails(){
+    public void showClientDetails() {
         System.out.println("Datos del cliente:");
         System.out.println("Nombre: " + this.clientName);
         System.out.println("Apellidos: " + this.clientSurname);
@@ -34,9 +37,10 @@ public class Client {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.getClientName() + " " + this.getClientSurname();
     }
+
     public String getClientName() {
         return clientName;
     }
@@ -84,5 +88,8 @@ public class Client {
     public void setClientGender(String clientGender) {
         this.clientGender = clientGender;
     }
-}
 
+    public Map<Days, String> getDietList() {
+        return dietList;
+    }
+}

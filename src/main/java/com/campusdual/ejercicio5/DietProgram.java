@@ -1,23 +1,29 @@
 package com.campusdual.ejercicio5;
 
-import com.campusdual.ejercicio5.exceptions.*;
+import com.campusdual.ejercicio5.enums.Days;
+import com.campusdual.ejercicio5.exceptions.MaxCaloriesReachedException;
+import com.campusdual.ejercicio5.exceptions.MaxCarbsReachedException;
+import com.campusdual.ejercicio5.exceptions.MaxFatsReachedException;
+import com.campusdual.ejercicio5.exceptions.MaxProteinsReachedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DietProgram {
-    private List<Food> foodList;
+    private final List<Food> foodList;
     private List<Client> clientsList;
-    //private List<Diet> dietsList;
     private HashMap<String, Diet> dietsList;
     private Client activeClient;
     private String activeDiet;
+    private final Map<Days, Diet> dietAssignments;
+
 
     public DietProgram(){
-        foodList = new ArrayList<>();
-
         //Inicializacion alimentos predefinidos
+
+        foodList = new ArrayList<>();
 
         Food tofu = new Food("Tofu", 1, 7, 11);
         Food garbanzos = new Food("Garbanzos", 30, 3, 10);
@@ -33,10 +39,10 @@ public class DietProgram {
         foodList.add(lentejas);
         foodList.add(arroz);
         foodList.add(macarrones);
-        clientsList = new ArrayList<>();
-        dietsList = new HashMap<>();
 
-        //Inicializacion alimentos predefinidos
+        dietsList = new HashMap<>();
+        clientsList = new ArrayList<>();
+        dietAssignments = new HashMap<>();
     }
 
     public List<Client> getClientsList() {
@@ -131,9 +137,9 @@ public class DietProgram {
             String select = Kb.nextLine("Seleccione una dieta:");
             activeDiet = select; // Almacena solo la clave
             System.out.println("Has seleccionado '" + activeDiet + "'");
-
-            activeDietMenu();
         }
+
+        activeDietMenu();
     }
     private void searchDiet(){
         String searchDiet = Kb.nextLine("Escribe el nombre de la dieta:");
@@ -507,6 +513,7 @@ public class DietProgram {
         switch (option) {
             case 1:
                 activeClient.showClientDetails();
+                listDietDays(activeClient.getDietList());
                 break;
             case 2:
                 asignClientDiet();
@@ -518,40 +525,64 @@ public class DietProgram {
                 break;
         }
     }
-    private void asignClientDiet() {
-        //TODO Programar todo el método
-        //TODO ~~~~~~~~~~~~~~~~~~~~~~~~
-        //TODO ~~~~~~~~~~~~~~~~~~~~~~~~
-        //TODO Programar todo el método
+    private void listDietDays(Map<Days,String> map){
+        System.out.println("Dietas asignadas para " + activeClient.getClientName() + ":");
 
-        System.out.println("Elija un dia:");
-        System.out.println("1-Lunes");
-        System.out.println("2-Martes");
-        System.out.println("3-Miercoles");
-        System.out.println("4-Jueves");
-        System.out.println("5-Viernes");
-        System.out.println("6-Sabado");
-        System.out.println("7-Domingo");
-        System.out.println("8-Salir");
-        Integer selectedDay = Kb.forceNextInt();
+        for (Map.Entry<Days, Diet> entry : dietAssignments.entrySet()) {
+            Days day = entry.getKey();
+            Diet diet = entry.getValue();
+            String dayName = day.getName();
 
-       // String dietName = getSelectDiet();
+            // Buscar el nombre de la dieta en el mapa dietsList
+            String dietName = null;
+            for (Map.Entry<String, Diet> dietEntry : dietsList.entrySet()) {
+                if (dietEntry.getValue() == diet) {
+                    dietName = dietEntry.getKey();
+                    break;
+                }
+            }
 
-
+            if (dietName != null) {
+                System.out.println(dayName + ": " + dietName);
+            } else {
+                System.out.println(dayName + ": Dieta no encontrada");
+            }
+        }
     }
-//    private String getSelectDiet(){
-//        if (dietsList.isEmpty()){
-//            System.out.println("No tienes ninguna dieta creada.");
-//        } else {
-//            System.out.println("Lista de dietas:");
-//            for (String dietName : dietsList.keySet()) {
-//                System.out.println("- " + dietName);
-//            }
-//            String select = Kb.nextLine("Seleccione una dieta:");
-//
-//        }
-//    }
+    private void asignClientDiet() {
+        if (dietsList.isEmpty()){
+            System.out.println("No existen dietas. Debe crear una antes de continuar.");
+        }else {
+        // Mostrar lista de días de la semana
+        System.out.println("Selecciona el día de la semana:");
+        Days[] daysArray = Days.values();
+        for (int i = 0; i < daysArray.length; i++) {
+            System.out.println((i + 1) + ". " + daysArray[i].getName());
+        }
+        // Solicitar al usuario que elija un día
+        int selectedDayIndex = Kb.getOption(1, daysArray.length) - 1;
+        Days selectedDay = daysArray[selectedDayIndex];
 
+        System.out.println("Selecciona una dieta para asignar al día:");
+        // Mostrar las dietas disponibles y solicitar al usuario que seleccione una
+            int dietIndex = 1;
+            for (Map.Entry<String, Diet> entry : dietsList.entrySet()) {
+                String dietName = entry.getKey();
+                System.out.println(dietIndex + ". " + dietName);
+                dietIndex++;
+            }
+
+            int selectedDietIndex = Kb.getOption(1, dietsList.size()) - 1;
+
+            // Obtener la dieta seleccionada
+            List<Diet> dietList = new ArrayList<>(dietsList.values());
+            Diet selectedDiet = dietList.get(selectedDietIndex);
+
+            // Asignar la dieta seleccionada al día seleccionado para el cliente activo
+            dietAssignments.put(selectedDay, selectedDiet);
+            System.out.println("Dieta asignada con éxito a " + activeClient.getClientName() + " para el día " + selectedDay.getName());
+        }
+    }
     private void deleteClient(){
             String youSure = Kb.nextLine("¿Está seguro de que desea eliminar el cliente " + activeClient + " ? S/N");
             if (youSure.equals("S")) {
