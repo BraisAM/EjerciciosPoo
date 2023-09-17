@@ -527,7 +527,6 @@ public class DietProgram {
     }
     private void listDietDays(Map<Days,String> map){
         System.out.println("Dietas asignadas para " + activeClient.getClientName() + ":");
-
         for (Map.Entry<Days, Diet> entry : dietAssignments.entrySet()) {
             Days day = entry.getKey();
             Diet diet = entry.getValue();
