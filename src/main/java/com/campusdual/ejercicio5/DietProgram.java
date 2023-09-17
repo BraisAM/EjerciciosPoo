@@ -6,10 +6,7 @@ import com.campusdual.ejercicio5.exceptions.MaxCarbsReachedException;
 import com.campusdual.ejercicio5.exceptions.MaxFatsReachedException;
 import com.campusdual.ejercicio5.exceptions.MaxProteinsReachedException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DietProgram {
     private final List<Food> foodList;
@@ -32,13 +29,8 @@ public class DietProgram {
         Food lentejas = new Food("Lentejas", 60, 1, 26);
         Food arroz = new Food("Arroz", 28, 0, 3);
         Food macarrones = new Food("Macarrones", 74, 2, 12);
-        foodList.add(tofu);
-        foodList.add(garbanzos);
-        foodList.add(seitan);
-        foodList.add(espinacas);
-        foodList.add(lentejas);
-        foodList.add(arroz);
-        foodList.add(macarrones);
+
+        foodList.addAll(Arrays.asList(tofu, garbanzos, seitan, espinacas, lentejas, arroz, macarrones));
 
         dietsList = new HashMap<>();
         clientsList = new ArrayList<>();
