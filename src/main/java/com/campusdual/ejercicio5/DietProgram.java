@@ -7,7 +7,10 @@ import com.campusdual.ejercicio5.exceptions.MaxFatsReachedException;
 import com.campusdual.ejercicio5.exceptions.MaxProteinsReachedException;
 import com.campusdual.ejercicio5.files.FileManager;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DietProgram {
     private final List<Food> foodList;
@@ -25,21 +28,25 @@ public class DietProgram {
         //Inicializacion alimentos predefinidos
 
         foodList = new ArrayList<>();
-
+        foodListInitialize();
 
 //        Food tofu = new Food("Tofu", 1, 7, 11);
 //        Food garbanzos = new Food("Garbanzos", 30, 3, 10);
 //        Food seitan = new Food("Seitan", 4, 2, 25);
-        Food espinacas = new Food("Espinacas", 1, 0, 1);
-        Food lentejas = new Food("Lentejas", 60, 1, 26);
-        Food arroz = new Food("Arroz", 28, 0, 3);
-        Food macarrones = new Food("Macarrones", 74, 2, 12);
+//        Food espinacas = new Food("Espinacas", 1, 0, 1);
+//        Food lentejas = new Food("Lentejas", 60, 1, 26);
+//        Food arroz = new Food("Arroz", 28, 0, 3);
+//        Food macarrones = new Food("Macarrones", 74, 2, 12);
 
-        foodList.addAll(Arrays.asList(espinacas, lentejas, arroz, macarrones));
+//        foodList.addAll(Arrays.asList(espinacas, lentejas, arroz, macarrones));
 
         dietsList = new HashMap<>();
         clientsList = new ArrayList<>();
         dietAssignments = new HashMap<>();
+
+        System.out.println("\n" +
+                "█▀█ █▀█ █▀█ █▀▀ █▀█ ▄▀█ █▀▄▀█ ▄▀█   █▀▄ █▀▀   █▀▄ █ █▀▀ ▀█▀ ▄▀█ █▀\n" +
+                "█▀▀ █▀▄ █▄█ █▄█ █▀▄ █▀█ █░▀░█ █▀█   █▄▀ ██▄   █▄▀ █ ██▄ ░█░ █▀█ ▄█");
     }
 
     public List<Client> getClientsList() {
@@ -59,9 +66,6 @@ public class DietProgram {
     }
 
     public void showMenuProgram(){
-        System.out.println("\n" +
-                "█▀█ █▀█ █▀█ █▀▀ █▀█ ▄▀█ █▀▄▀█ ▄▀█   █▀▄ █▀▀   █▀▄ █ █▀▀ ▀█▀ ▄▀█ █▀\n" +
-                "█▀▀ █▀▄ █▄█ █▄█ █▀▄ █▀█ █░▀░█ █▀█   █▄▀ ██▄   █▄▀ █ ██▄ ░█░ █▀█ ▄█");
         Integer option;
         do{
             System.out.println("@@@@@@@@@@@@@@@@@@@@");
@@ -232,8 +236,9 @@ public class DietProgram {
         System.out.println("====================");
         System.out.println("1-Detalles de la dieta");
         System.out.println("2-Modificar dieta");
-        System.out.println("3-Eliminar dieta");
-        System.out.println("4-Volver");
+        System.out.println("3-Añadir alimento");
+        System.out.println("4-Eliminar dieta");
+        System.out.println("5-Volver");
         System.out.println("====================");
         Integer option = Kb.getOption(1,4);
         switch (option){
@@ -244,9 +249,12 @@ public class DietProgram {
                 modifyDiet();
                 break;
             case 3:
-                deleteDiet();
+                addFoodMenu();
                 break;
             case 4:
+                deleteDiet();
+                break;
+            case 5:
                 break;
         }
     }
@@ -618,6 +626,7 @@ public class DietProgram {
                     break;
             }
         }while (option!=4);
+            showMenuProgram();
     }
     public void addFoodToFile(){
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
@@ -628,11 +637,42 @@ public class DietProgram {
         Integer fats = Kb.forceNextInt("Grasas:");
         Integer proteins = Kb.forceNextInt("Proteínas:");
 
-        FileManager.writeLine(foodsPath,name + ";" + carbs + "," + fats + "," + proteins);
+        FileManager.writeLine(foodsPath,name + ";" + carbs + ";" + fats + ";" + proteins);
     }
     public void foodListFromFile(){
+        List<String> lines;
+        lines = FileManager.readFile(foodsPath);
 
+        for (String line : lines) {
+            String[] parts = line.split(";");
+            String nameFood = parts[0];
+            Integer carbsFood = Integer.parseInt(parts[1]);
+            Integer fatsFood = Integer.parseInt(parts[2]);
+            Integer protsFood = Integer.parseInt(parts[3]);
+            Food newFood = new Food(nameFood, carbsFood, fatsFood, protsFood);
+            foodList.add(newFood);
+        }
+        int i = 1;
+        for (Food food : foodList) {
+            System.out.println(i + "-" + food.getName() + " " + food.getCarbos() + " " + food.getFats() + " " + food.getProteins());
+            i++;
+        }
     }
+    public void foodListInitialize(){
+        List<String> lines;
+        lines = FileManager.readFile(foodsPath);
+
+        for (String line : lines) {
+            String[] parts = line.split(";");
+            String nameFood = parts[0];
+            Integer carbsFood = Integer.parseInt(parts[1]);
+            Integer fatsFood = Integer.parseInt(parts[2]);
+            Integer protsFood = Integer.parseInt(parts[3]);
+            Food newFood = new Food(nameFood, carbsFood, fatsFood, protsFood);
+            foodList.add(newFood);
+        }
+    }
+
     public void deleteFoodFromFile(){
 
     }

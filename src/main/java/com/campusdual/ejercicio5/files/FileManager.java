@@ -1,10 +1,11 @@
 package com.campusdual.ejercicio5.files;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileManager {
+
     public static void writeLine(String filePath, String content) {
         try(FileWriter fileWriter = new FileWriter(filePath, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter))
@@ -17,8 +18,18 @@ public class FileManager {
         }
     }
 
-    public static void readLine(){
+    public static List<String> readFile(String filePath) {
+        List<String> lines = new ArrayList<>();
 
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
     }
 
 //        // Leer todo el archivo y devolver una lista de líneas
