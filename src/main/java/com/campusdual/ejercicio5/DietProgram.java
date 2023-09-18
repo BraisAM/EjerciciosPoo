@@ -5,6 +5,7 @@ import com.campusdual.ejercicio5.exceptions.MaxCaloriesReachedException;
 import com.campusdual.ejercicio5.exceptions.MaxCarbsReachedException;
 import com.campusdual.ejercicio5.exceptions.MaxFatsReachedException;
 import com.campusdual.ejercicio5.exceptions.MaxProteinsReachedException;
+import com.campusdual.ejercicio5.files.FileManager;
 
 import java.util.*;
 
@@ -15,6 +16,9 @@ public class DietProgram {
     private Client activeClient;
     private String activeDiet;
     private final Map<Days, Diet> dietAssignments;
+    String clientsPath = "E:\\GitHub\\EjerciciosPoo\\src\\main\\resources\\ficheros\\ClientsFile.txt";
+    String dietsPath = "E:\\GitHub\\EjerciciosPoo\\src\\main\\resources\\ficheros\\DietsFile.txt";
+    String foodsPath = "E:\\GitHub\\EjerciciosPoo\\src\\main\\resources\\ficheros\\FoodsFile.txt";
 
 
     public DietProgram(){
@@ -22,15 +26,16 @@ public class DietProgram {
 
         foodList = new ArrayList<>();
 
-        Food tofu = new Food("Tofu", 1, 7, 11);
-        Food garbanzos = new Food("Garbanzos", 30, 3, 10);
-        Food seitan = new Food("Seitan", 4, 2, 25);
+
+//        Food tofu = new Food("Tofu", 1, 7, 11);
+//        Food garbanzos = new Food("Garbanzos", 30, 3, 10);
+//        Food seitan = new Food("Seitan", 4, 2, 25);
         Food espinacas = new Food("Espinacas", 1, 0, 1);
         Food lentejas = new Food("Lentejas", 60, 1, 26);
         Food arroz = new Food("Arroz", 28, 0, 3);
         Food macarrones = new Food("Macarrones", 74, 2, 12);
 
-        foodList.addAll(Arrays.asList(tofu, garbanzos, seitan, espinacas, lentejas, arroz, macarrones));
+        foodList.addAll(Arrays.asList(espinacas, lentejas, arroz, macarrones));
 
         dietsList = new HashMap<>();
         clientsList = new ArrayList<>();
@@ -66,9 +71,10 @@ public class DietProgram {
             System.out.println("====================");
             System.out.println("1-Dietas");
             System.out.println("2-Clientes");
-            System.out.println("3-Salir del programa");
+            System.out.println("3-Alimentos");
+            System.out.println("4-Salir del programa");
             System.out.println("====================");
-            option = Kb.getOption(1,3);
+            option = Kb.getOption(1,4);
             switch (option){
                 case 1:
                     dietsMenu();
@@ -77,6 +83,9 @@ public class DietProgram {
                     clientsMenu();
                     break;
                 case 3:
+                    foodsMenu();
+                    break;
+                case 4:
                     System.out.println("Gracias por usar el programa, hasta pronto ⊂(◉‿◉)つ");
                     break;
             }
@@ -222,26 +231,22 @@ public class DietProgram {
         System.out.println("Escriba una opción:");
         System.out.println("====================");
         System.out.println("1-Detalles de la dieta");
-        System.out.println("2-Añadir alimento");
-        System.out.println("3-Modificar dieta");
-        System.out.println("4-Eliminar dieta");
-        System.out.println("5-Volver");
+        System.out.println("2-Modificar dieta");
+        System.out.println("3-Eliminar dieta");
+        System.out.println("4-Volver");
         System.out.println("====================");
-        Integer option = Kb.getOption(1,5);
+        Integer option = Kb.getOption(1,4);
         switch (option){
             case 1:
                 showDietDetails();
                 break;
             case 2:
-                addFoodMenu();
-                break;
-            case 3:
                 modifyDiet();
                 break;
-            case 4:
+            case 3:
                 deleteDiet();
                 break;
-            case 5:
+            case 4:
                 break;
         }
     }
@@ -486,6 +491,8 @@ public class DietProgram {
         clientsList.add(clientData);
         System.out.println("Cliente " + clientName + " " + clientSurname + " añadido con éxito\n");
         activeClient = clientData;
+        String writer = clientName + ";" + clientSurname + ";" + clientWeight.toString() + ";" + clientHeight.toString() + ";" + clientAge.toString() + ";" + clientGender;
+        FileManager.writeLine(clientsPath, writer);
 
         activeClientMenu();
     }
@@ -581,5 +588,52 @@ public class DietProgram {
                 System.out.println("Cliente " + activeClient + " eliminado con éxito.\n");
                 activeClient = null;
             } else System.out.println("Menos mal que te pregunté, casi la lias.\n");
+    }
+    private void foodsMenu(){
+        Integer option;
+        do {
+        System.out.println("@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@     Alimentos    @");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("Escriba una opción:");
+        System.out.println("====================");
+        System.out.println("1-Nuevo alimento");
+        System.out.println("2-Lista de alimentos");
+        System.out.println("3-Eliminar alimento");
+        System.out.println("4-Volver");
+        System.out.println("====================");
+            option = Kb.getOption(1, 4);
+
+            switch (option) {
+                case 1:
+                    addFoodToFile();
+                    break;
+                case 2:
+                    foodListFromFile();
+                    break;
+                case 3:
+                    deleteFoodFromFile();
+                    break;
+                case 4:
+                    break;
+            }
+        }while (option!=4);
+    }
+    public void addFoodToFile(){
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@    Datos de nuevo alimento    @");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        String name = Kb.nextLine("Nombre del alimento:");
+        Integer carbs = Kb.forceNextInt("Carbohidratos:");
+        Integer fats = Kb.forceNextInt("Grasas:");
+        Integer proteins = Kb.forceNextInt("Proteínas:");
+
+        FileManager.writeLine(foodsPath,name + ";" + carbs + "," + fats + "," + proteins);
+    }
+    public void foodListFromFile(){
+
+    }
+    public void deleteFoodFromFile(){
+
     }
 }
